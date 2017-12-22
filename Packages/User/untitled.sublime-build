@@ -1,0 +1,15 @@
+{
+	"shell_cmd": "D:\\codeblocks\\MinGW\\bin\\g++.exe -g \"${file}\" -o \"${file_path}/${file_base_name}\"",
+	"file_regex": "^(..[^:]*):([0-9]+):?([0-9]+)?:? (.*)$",
+	"working_dir": "${file_path}",
+	"selector": "source.c, source.c++",
+	"path":"D:\\codeblocks\\MinGW\\bin",
+ 
+	"variants":
+	[
+		{
+			"name": "GOGOGO",
+			"shell_cmd": "start cmd /k \" D:\\codeblocks\\MinGW\\bin\\g++.exe -g \"${file}\" -o \"${file_path}/${file_base_name}\" &&  \"${file_path}/${file_base_name}\" \" "
+		}
+	]
+}
