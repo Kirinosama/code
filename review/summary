@@ -1,0 +1,57 @@
+kmp:
+初始化fail[0]=fail[1]=0;
+从1开始for 如果s[迭代的fail]=s[自身] i+1的fail为cur+1
+
+AC自动机指针版:
+root及root下一层fail都为root
+bfs时
+若有这个子节点 则子节点的fail指针为次节点的fail节点的对应子节点
+否则 子节点改为fail指针的对应子节点(若为NULL则为root)
+匹配时 直接进入下一点 若进入NULL则转到root
+从此点开始跳转 当跳到root或cnt=-1时停止
+
+割点割边（无向图）:
+割点：u!=root && low[v]>=dfn[u] || u==root && child==2
+割边:low[v]>dfn[u] edge(u,v)为割边 传入fa
+
+线性筛逆元:
+inv[1]=1;rep(2,n) inv[i]=(p-p/i)*inv[p%i])
+
+中国剩余定理:
+ans=Σa[i]*M[i]*inv(M[i],m[i])
+a为余数 m为除数
+
+差分约束:
+a-b<=c 从b向a连一条长度为c的边
+求最短路 dis[s][t]即为最大值
+a-b>=c 从b向a连一条长度为c的边
+求最长路 dis[s][t]即为最小值
+若dis[s][t]没被更新 无穷解
+若有负环 无解
+
+manacher：
+pos为对称轴中心 maxright为对称最右位置
+if(i<maxright)
+l[i]=min(l[2*pos-i],maxright-i)
+else 
+l[i]=1;
+然后暴力扩展 注意边界
+
+欧拉回路：
+无向图：每个顶点的度数都是偶数，则存在欧拉回路。
+有向图：每个顶点的入度都等于出度，则存在欧拉回路。
+欧拉路径：
+无向图：当且仅当该图所有顶点的度数为偶数 或者 除了两个度数为奇数外其余的全是偶数。
+有向图：当且仅当该图所有顶点 出度=入度 或者 一个顶点 出度=入度+1，另一个顶点 入度=出度+1，其 
+他顶点 出度=入度。
+
+Procedure Euler-circuit (start);  
+Begin  
+  For 顶点start的每个邻接点v Do  
+  If 边(start,v)未被标记 Then Begin  
+    将边(start,v)作上标记;  
+    将边(v,start)作上标记;                   //1  
+    Euler-circuit (v);  
+    将边加入栈;  
+  End;  
+End;  

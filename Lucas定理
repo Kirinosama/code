@@ -1,0 +1,6 @@
+Lucas定理：
+求解C(n,m)%p, n和m是非负整数，p是质数.
+
+结论1. Lucas(n,m,p)=c(n%p,m%p)*Lucas(n/p,m/p,p);
+
+结论2. 把n写成p进制a[n]a[n-1]a[n-2]...a[0]，把m写成p进制b[n]b[n-1]b[n-2]...b[0]，则C(n,m)与C(a[n],b[n])*C(a[n-1],b[n-1])*C(a[n-2],b[-2])*....*C(a[0],b[0])模p同余。
