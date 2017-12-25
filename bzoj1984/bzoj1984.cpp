@@ -159,32 +159,38 @@ int query(node *p,int l,int r,int L,int R){
 void Query(int u,int v){
 	int ans=0;
 	while(u!=v){
-		if(dep[u]<dep[v]) swap(u,v);
+		if(dep[top[u]]<dep[top[v]]) swap(u,v);
 		if(top[u]!=top[v])
 			ans=max(ans,query(root,1,n,id[top[u]],id[u])),u=father[top[u]];
-		else 
+		else{
+			if(dep[u]<dep[v]) swap(u,v);
 			ans=max(ans,query(root,1,n,id[v]+1,id[u])),u=v;
+		}
 	}
 	printf("%d\n",ans);
 }
 
 void cover(int u,int v,int k){
 	while(u!=v){
-		if(dep[u]<dep[v]) swap(u,v);
+		if(dep[top[u]]<dep[top[v]]) swap(u,v);
 		if(top[u]!=top[v])
 			change(root,1,n,id[top[u]],id[u],k),u=father[top[u]];
-		else 
+		else{
+			if(dep[u]<dep[v]) swap(u,v);
 			change(root,1,n,id[v]+1,id[u],k),u=v;
+		}
 	}
 }
 
 void Add(int u,int v,int k){
 	while(u!=v){
-		if(dep[u]<dep[v]) swap(u,v);
+		if(dep[top[u]]<dep[top[v]]) swap(u,v);
 		if(top[u]!=top[v])
 			add(root,1,n,id[top[u]],id[u],k),u=father[top[u]];
-		else 
+		else{
+			if(dep[u]<dep[v]) swap(u,v);
 			add(root,1,n,id[v]+1,id[u],k),u=v;
+		}
 	}
 }
 
