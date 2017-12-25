@@ -127,7 +127,6 @@ void add(node *&p,int l,int r,int L,int R,int k){
 	if(l>R || r<L) return;
 	if(l>=L && r<=R){
 		p->MAX+=k;
-		p->add+=k;
 		return;
 	}
 	if(l!=r){
@@ -219,7 +218,7 @@ void solve(){
 }
 
 int main(){
-	freopen("input","r",stdin);
+	freopen("bzoj1984.in","r",stdin);
 	scanf("%d",&n);
 	premake();
 	solve();
