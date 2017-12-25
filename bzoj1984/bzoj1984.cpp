@@ -203,7 +203,7 @@ void solve(){
 				scanf("%d %d",&u,&k);
 				x=E[u*2-1].x,y=E[u*2-1].y;
 				if(dep[x]<dep[y]) swap(x,y);
-				change(root,1,n,x,x,k);break;
+				change(root,1,n,id[x],id[x],k);break;
 			case 'o':
 				scanf("%d %d %d",&u,&v,&k);
 				cover(u,v,k);break;
@@ -219,6 +219,7 @@ void solve(){
 
 int main(){
 	freopen("bzoj1984.in","r",stdin);
+	freopen("out1","w",stdout);
 	scanf("%d",&n);
 	premake();
 	solve();

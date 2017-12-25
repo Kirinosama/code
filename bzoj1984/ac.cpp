@@ -175,6 +175,7 @@ inline int Query(int u,int t){
 
 int main(){
     freopen("bzoj1984.in","r",stdin);
+    freopen("out2","w",stdout);
     scanf("%d",&n);
     for (int i=1;i<n;++i){
         scanf("%d%d%d",&x,&y,&z);

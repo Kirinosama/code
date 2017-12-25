@@ -6,14 +6,14 @@
 using namespace std;
 
 #define MAXN 10
-#define MAXM 10
+#define MAXM 30
 
 int book[100010],cnt;
 
 int main(){
 	freopen("bzoj1984.in","w",stdout);
 	srand(time(0));
-	int n=rand()%MAXN+1;
+	int n=rand()%MAXN+2;
 	cout<<n<<endl;
 	book[++cnt]=1;
 	for(int i=1;i<n;i++){
@@ -31,8 +31,11 @@ int main(){
 			printf("Cover %d %d %d\n",rand()%n+1,rand()%n+1,rand()%100);
 		if(c==2)
 			printf("Add %d %d %d\n",rand()%n+1,rand()%n+1,rand()%100);
-		if(c==3)
-			printf("Max %d %d\n",rand()%n+1,rand()%n+1);
+		if(c==3){
+			int x=rand()%n+1,y=rand()%n+1;
+			while(x==y) y=rand()%n+1;
+			printf("Max %d %d\n",x,y);
+		}
 	}
 	printf("Stop");
 	return 0;
