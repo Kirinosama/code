@@ -11,7 +11,7 @@ typedef long long ll;
 map <char,int> mp;
 
 int w[5][5],ans,l1,l2,a,b;
-int f[3010][3010][2][2];
+int f[3010][3010][4];
 string s1,s2;
 
 int main(){
@@ -24,24 +24,30 @@ int main(){
 	mp['A']=1,mp['T']=2,mp['G']=3,mp['C']=4;
 	scanf("%d %d",&a,&b);
 	memset(f,0xc0,sizeof(f));
-	f[0][0][1][1]=0;
-	for(int i=1;i<=l1;i++)
-		for(int j=1;j<=l2;j++){
+	f[0][0][3]=0;
+	for(int i=0;i<=l1;i++)
+		for(int j=0;j<=l2;j++){
 			int c=w[mp[s1[i]]][mp[s2[j]]];
-			f[i][j][0][1]=max(f[i][j][0][1],f[i][j-1][1][1]-a);
-			f[i][j][0][1]=max(f[i][j][0][1],f[i][j-1][1][0]-a);
-			f[i][j][0][1]=max(f[i][j][0][1],f[i][j-1][0][1]-b);
-			f[i][j][1][0]=max(f[i][j][1][0],f[i-1][j][1][1]-a);
-			f[i][j][1][0]=max(f[i][j][1][0],f[i-1][j][1][0]-b);
-			f[i][j][1][0]=max(f[i][j][1][0],f[i-1][j][0][1]-a);
-			f[i][j][1][1]=max(f[i][j][1][1],f[i-1][j-1][1][1]+c);
-			f[i][j][1][1]=max(f[i][j][1][1],f[i-1][j-1][0][1]+c);
-			f[i][j][1][1]=max(f[i][j][1][1],f[i-1][j-1][1][0]+c);
+			if(j-1>=0){
+				f[i][j][1]=max(f[i][j][1],f[i][j-1][3]-a);
+				f[i][j][1]=max(f[i][j][1],f[i][j-1][2]-a);
+				f[i][j][1]=max(f[i][j][1],f[i][j-1][1]-b);
+			}
+			if(i-1>=0){
+				f[i][j][2]=max(f[i][j][2],f[i-1][j][3]-a);
+				f[i][j][2]=max(f[i][j][2],f[i-1][j][2]-b);
+				f[i][j][2]=max(f[i][j][2],f[i-1][j][1]-a);
+			}
+			if(i-1>=0 && j-1>=0){
+				f[i][j][3]=max(f[i][j][3],f[i-1][j-1][3]+c);
+				f[i][j][3]=max(f[i][j][3],f[i-1][j-1][1]+c);
+				f[i][j][3]=max(f[i][j][3],f[i-1][j-1][2]+c);
+			}
 		}
 	ans=0xefefefef;
-	ans=max(ans,f[l1][l2][1][1]);
-	ans=max(ans,f[l1][l2][1][0]);
-	ans=max(ans,f[l1][l2][0][1]);
+	ans=max(ans,f[l1][l2][3]);
+	ans=max(ans,f[l1][l2][2]);
+	ans=max(ans,f[l1][l2][1]);
 	cout<<ans;
 	return 0;
 }
