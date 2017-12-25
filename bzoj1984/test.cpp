@@ -5,8 +5,8 @@
 #include <ctime>
 using namespace std;
 
-#define MAXN 10
-#define MAXM 30
+#define MAXN 1000
+#define MAXM 3000
 
 int book[100010],cnt;
 

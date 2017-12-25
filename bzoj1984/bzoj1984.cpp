@@ -127,7 +127,7 @@ void add(node *&p,int l,int r,int L,int R,int k){
 	if(l>R || r<L) return;
 	if(l>=L && r<=R){
 		p->MAX+=k;
-		p->add+=k;
+		if(!p->flag) p->add+=k;
 		return;
 	}
 	if(l!=r){
