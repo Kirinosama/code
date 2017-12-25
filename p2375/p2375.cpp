@@ -30,8 +30,9 @@ void solve(){
 		if(!ne[i]){
 			v[++cnt].clear();v[cnt].push_back(0);last[i]=cnt;
 		}
-		else 
-			v[last[ne[i]]].push_back(i);last[i]=last[ne[i]];
+		else{
+			v[last[ne[i]]].push_back(ne[i]);last[i]=last[ne[i]];
+		}
 		int t=last[i];
 		ll pos=upper_bound(v[t].begin(),v[t].end(),i/2)-v[t].begin();
 		ans=(ans*pos)%MOD;
