@@ -1,7 +1,7 @@
 {
 	"auto_match_enabled": false,
-	"color_scheme": "Packages/Theme - Spacegray/base16-ocean.dark.tmTheme",
-	"font_face": "Source Code Pro light",
+	"color_scheme": "Packages/ayu/ayu-light.tmTheme",
+	"font_face": "Source Code Pro ExtraLight",
 	"font_options":
 	[
 		"directwrite"
@@ -11,5 +11,7 @@
 	[
 		"Vintage"
 	],
-	"theme": "Spacegray.sublime-theme"
+	"line_padding_top": 2,
+	"open_files_in_new_window": false,
+	"theme": "ayu-light.sublime-theme"
 }
