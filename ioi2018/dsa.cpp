@@ -10,6 +10,9 @@ using namespace std;
 #define INF 0x3f3f3f3f
 typedef long long ll;
 
+//f[k][d]表示从k开始长度为d的最早结束位置
+//popback时反向更新（可在结尾用set存）
+
 int n,m,q,a[MAXN],s[MAXN];
 int f[MAXN],maxlen,cnt;
 
@@ -99,7 +102,8 @@ void solve(){
 }
 
 int main(){
-    freopen("ioi2018.in","r",stdin);
+    freopen("dsa.in","r",stdin);
+    freopen("dsa.out","w",stdout);
     cin>>n>>m>>q;
     for(int i=1;i<=n;i++)
     	scanf("%d",&a[i]);

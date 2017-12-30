@@ -14,7 +14,7 @@ char str[10];
 
 void solve(){
 	scanf("%s %d",str,&cnt);
-
+	
 }
 
 int main(){

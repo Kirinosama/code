@@ -11,5 +11,7 @@ typedef long long ll;
 
 int main(){
     freopen("ioi2018.in","r",stdin);
+    for(int i=3;i<=10;i++)
+    	solve(i);
     return 0;
 }
