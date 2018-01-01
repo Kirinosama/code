@@ -48,14 +48,16 @@ int isonright(point a,point b,point c){
 }
 
 bool cmp(const point &a,const point &b){
-	if((dis(a,S.a)<=S.l+eps)>(dis(b,S.a)<=S.l+eps))
-		return true;
-	if(isonright(S.a,S.b,a)>isonright(S.a,S.b,b))
-		return true;
-	int c=isonright(S.a,a,b);
-	if(c==1) return true;
-	if(c==-1) return false;
-	return dis(S.a,a)>dis(S.a,b);
+	if((dis(a,S.a)<=S.l+eps)==(dis(b,S.a)<=S.l+eps)){
+		if(isonright(S.a,S.b,a)==isonright(S.a,S.b,b)){
+			int c=isonright(S.a,a,b);
+			if(c==1) return true;
+			if(c==-1) return false;
+			return dis(S.a,a)>dis(S.a,b);
+		}
+		return isonright(S.a,S.b,a)>isonright(S.a,S.b,b);
+	}
+	return (dis(a,S.a)<=S.l+eps)>(dis(b,S.a)<=S.l+eps);
 }
 
 int n,m,t;
@@ -64,9 +66,16 @@ void make(){
 	int res=1;
 	for(int i=1;i<=n;i++)
 		d[i].lastnum=0;
+	if(n==1){
+		if(dis(d[1],S.a)<=S.l+eps)
+			printf("2\n");
+		else printf("1\n");
+		return;
+	}
 	while(1){
 		sort(d+1,d+1+n,cmp);
-		if(dis(d[1],S.a)>S.l) break;
+		if(d[1].x==S.a.x && d[1].y==S.a.y) swap(d[1],d[2]);
+		if(dis(d[1],S.a)>S.l+eps) break;
 		res++;S.l-=dis(d[1],S.a);
 		if(d[1].lastnum && d[1].lastlen-S.l<S.l){
 			double roundlen=d[1].lastlen-S.l;

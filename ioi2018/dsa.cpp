@@ -4,6 +4,7 @@
 #include <iostream>
 #include <algorithm>
 #include <cmath>
+#include <vector>
 using namespace std;
 
 #define MAXN 200010
@@ -42,20 +43,47 @@ void addl(int x){
 	cout<<maxlen<<' '<<cnt<<endl;
 }
 
-void addr(int x){
-	n++;
-	memset(f[n],0x3f,sizeof(f[n]));
-	a[n]=x,pos[x]=n,f[n][1]=n;
-	for(int i=1;i<n;i++)
-		for(int j=25;j>=1;j--){
-			if(f[i][j]!=INF && !(x%a[f[i][j]])){
-				f[i][j+1]=min(f[i][j+1],n);
-				if(f[i][j+1]!=INF && j+1>=maxlen){
-					if(j+1>maxlen) maxlen=j+1,cnt=1;
-					else cnt++;
-				}
+void update(int x){
+	for(int i=1;i<=sqrt(x);i++){
+		if(!(x%i)){
+			if(pos[i])
+				for(int j=25;j>=1;j--)
+					if(f[pos[i]][j]<pos[x] && (!x%a[f[pos[i]][j]])){
+						if(f[pos[i]][j+1]==INF){
+							if(j+1>maxlen) maxlen=j+1,cnt=1;
+							else if(j+1==maxlen) cnt++;
+						}
+						f[pos[i]][j+1]=min(f[pos[i]][j+1],pos[x]);
+					}
+			if(x/i!=i && pos[x/i]){
+				for(int j=25;j>=1;j--)
+					if(f[pos[x/i]][j]<pos[x] && (!x%a[f[pos[x/i]][j]])){
+						if(f[pos[x/i]][j+1]==INF){
+							if(j+1>maxlen) maxlen=j+1,cnt=1;
+							else if(j+1==maxlen) cnt++;
+						}
+						f[pos[x/i]][j+1]=min(f[pos[x/i]][j+1],pos[x]);
+					}
 			}
 		}
+	}
+}
+
+void addr(int x){
+	n++;vector<int> v;
+	memset(f[n],0x3f,sizeof(f[n]));
+	a[n]=x,pos[x]=n,f[n][1]=n;
+	if(maxlen==1) cnt++;
+	for(int i=1;i<=sqrt(x);i++){
+		if(!(x%i)){
+			v.push_back(i);
+			if(x/i!=i) v.push_back(x/i);
+		}
+	}
+	sort(v.begin(),v.end());
+	for(int i=v.size()-1;i>=0;i--){
+		if(pos[v[i]]) update(v[i]);
+	}
 	cout<<maxlen<<' '<<cnt<<endl;
 }
 
