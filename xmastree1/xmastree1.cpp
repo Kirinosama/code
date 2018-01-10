@@ -12,16 +12,12 @@ using namespace std;
 typedef long long ll;
 
 struct node{
-	int sum,dif;
+	int sum;
 	node *ch[2];
-	void maintain(){
-		dif=0;
-		if(ch[0]) dif+=ch[0]->dif;
-		if(ch[1]) dif+=ch[1]->dif;
-	}
 }*root[MAXN];
 
 int n,m,t,col[MAXN],dfn[MAXN],tail[MAXN],cnt,id[MAXN];
+int pre[MAXN],last[MAXN],ne[MAXN];
 vector <int> to[MAXN];
 
 void dfs(int x,int f){
@@ -37,46 +33,70 @@ int lowbit(int x){
 }
 
 void update(node *&p,int l,int r,int pos,int k){
-	node *ls=p?p->ch[0]:NULL,*rs=p?p->ch[1]:NULL;
-	int cursum=p->sum,curdif=p->dif;
-	p=new node;p->sum=cursum+k;
-	if(pos==l && pos==r){
-		if(p->sum==1 && k==1) p->dif=1;
-		if(p->sum==0 && k==-1) p->dif=0;
+	if(!p){
+		p=new node;
 		p->ch[0]=p->ch[1]=NULL;
-		return;
+		p->sum=0;
 	}
+	p->sum+=k;
+	if(l==r) return;
 	int mid=(l+r)>>1;
-	if(pos<=mid){
-		p->ch[1]=rs;
+	if(pos<=mid)
 		update(p->ch[0],l,mid,pos,k);
-	}
-	else{
-		p->ch[0]=ls;
+	else
 		update(p->ch[1],mid+1,r,pos,k);
-	}
-	p->maintain();
-}
-
-void query(int l,int r,int L,int R){
-	asd
-}
-
-void solve(){
 }
 
 void premake(){
 	dfs(1,1);
 	for(int i=1;i<=n;i++){
+		int c=col[id[i]];
+		pre[i]=last[c];
+		ne[last[c]]=i;
+		last[c]=i;
 		for(int j=i;j<=n;j+=lowbit(j))
-			update(root[j],1,n,col[id[i]],1);
+			update(root[j],0,n-1,pre[i],1);
+	}
+}
+
+int Query(node *p,int l,int r,int L,int R){
+	if(!p) return 0;
+	if(l>=L && r<=R) return p->sum;
+	else if(l>R || r<L) return 0;
+	else if(l!=r){
+		int mid=(l+r)>>1;
+		return Query(p->ch[0],l,mid,L,R)+Query(p->ch[1],mid+1,r,L,R);
+	}
+	return 0;
+}
+
+void query(int l,int r){
+	int sum=0;
+	for(int i=r;i;i-=lowbit(i))
+		sum+=Query(root[i],0,n-1,0,l-1);
+	for(int i=l-1;i;i-=lowbit(i))
+		sum-=Query(root[i],0,n-1,0,l-1);
+	printf("%d\n",sum);
+}
+
+void solve(){
+	int opt,x,l,r;
+	scanf("%d",&opt);
+	switch(opt){
+		case 1:
+			scanf("%d %d %d",&x,l,r);
+			if(t) x^=lastans,l^=lastans,r^=lastans;
+			query()
+		case 2:
 	}
 }
 
 int main(){
     freopen("xmastree1.in","r",stdin);
     scanf("%d %d %d",&n,&m,&t);
-   	for(int i=1;i<=n;i++) scanf("%d",&col[i]);
+   	for(int i=1;i<=n;i++){
+   		scanf("%d",&col[i]);
+   	}
    	for(int i=1;i<n;i++){
    		static int x,y;
    		scanf("%d %d",&x,&y);
