@@ -15,7 +15,7 @@ typedef long long ll;
 
 struct node{
 	double x,y;
-	void in(){scanf("%d%d",&x,&y);}
+	void in(){scanf("%lf%lf",&x,&y);}
 	node operator -(const node &a){
 		return (node){x-a.x,y-a.y};
 	}
@@ -71,6 +71,7 @@ bool judge(line a,line b,line c){
 
 void solve(){
 	int head=1,tail=2;
+	double res=0.0;
 	Q[1]=l[1],Q[2]=l[2];
 	for(int i=3;i<=cnt;i++){
 		while(head<tail && judge(l[i],Q[tail],Q[tail-1])) tail--;
@@ -80,10 +81,14 @@ void solve(){
 	while(head<tail && judge(Q[head],Q[tail],Q[tail-1])) tail--;
 	while(head<tail && judge(Q[tail],Q[head],Q[head+1])) head++;
 	Q[++tail]=Q[head];
-	for(int i=head;i<tail;i++){
+	for(int i=head;i<tail;i++)
 		ans[++anscnt]=getintersect(Q[i],Q[i+1]);
-		printf("(%d,%d)\n",ans[anscnt].x,ans[anscnt].y);
-	}
+	for(int i=1;i<=anscnt;i++)
+		res+=ans[i].x*ans[i==anscnt?1:i+1].y;
+	for(int i=anscnt;i>=1;i--)
+		res-=ans[i].x*ans[i==anscnt?n:i-1].y;
+	res/=2.0;
+	printf("%.3f",res);
 }
 
 int main(){
