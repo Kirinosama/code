@@ -216,6 +216,12 @@ H[i] : 等于Height[Rank[i]]，也就是后缀Suffix[i]和它前一名的后缀�
 ->两个排名不相邻的最长公共前缀定义为排名在它们之间的Height的最小值。
 ->所有排好序的后缀取不同前缀 即为 所有排好序的不同子串
 
+lct：
+fa[x]=y表示在原树中x与y有边连接且fa[x]=y
+son[x][0]=y表示x，y在一个splay中且在原树中x深度比y大
+在一个splay中则原图必然连接 但原图连接不一定在一个splay中
+维护标记时注意size的影响 rev标记不当时执行 pushdown时执行
+
 回文树：
 节点信息 len to[26] sufflink（指向最长后缀回文串）
 初始化num=2;suff=2;

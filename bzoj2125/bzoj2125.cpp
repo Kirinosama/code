@@ -71,12 +71,10 @@ void tarjan(int x,int f){
 }
 
 void dfs1(int x,int f,int dis){
-	//printf("%d->%d\n",f,x);
 	val[x]=min(val[x],dis);
 	for(int i=last[x];i;i=ne[i]){
 		int y=E[i].y;
-		if(y==flag) return;
-		if(y!=f && book[y]) dfs1(y,x,dis+E[i].z);
+		if(y!=flag && y!=f && book[y]) dfs1(y,x,dis+E[i].z);
 	}
 }
 
@@ -129,44 +127,42 @@ void dfs2(int x,int f,int ed,int dis){
 			dfs2(E[i].y,x,ed,dis+E[i].z);
 }
 
-int cal(int id){
-	int st,fa,cur,sum=0;
+int find(int x,int f,int ed){
+	int res=INF;
+	if(x==ed) return 0;
+	//printf("%d->%d\n",f,x);
+	for(int i=last[x];i;i=ne[i])
+		if(E[i].y!=f && book[E[i].y])
+			res=min(res,find(E[i].y,x,ed)+E[i].z);
+	return res;
+}
+
+int cal(int x,int y,int id){
 	for(int i=last1[id];i;i=ne1[i])
-		book[E1[i].y]=true,st=E1[i].y;
-	fa=st,cur=st;
-	while(1){
-		for(int i=last[cur];i;i=ne[i])
-			if(E[i].y!=fa && book[E[i].y]){
-				fa=cur,cur=E[i].y,sum+=E[i].z;
-				printf("%d->%d\n",fa,cur);
-				break;
-			}
-		if(cur==st) break;
-	}
+		book[E1[i].y]=true;
+	int sum=find(x,x,y);
 	for(int i=last1[id];i;i=ne1[i])
 		book[E1[i].y]=false;
 	return sum;
 }
 
 void solve1(int x,int y,int id){
-	int res=cal(id);
-	for(int i=last1[id];i;i=ne1[id]){
-		if(deep[E1[i].y]==deep[id]+1 && lca(E1[i].y,x)==E1[i].y)
-			res-=E1[i].z,res+=dep[x]-dep[E1[i].y];
-		if(deep[E1[i].y]==deep[id]+1 && lca(E1[i].y,y)==E1[i].y)
-			res-=E1[i].z,res+=dep[y]-dep[E1[i].y];
-	}
-	ans=min(ans,res);
-	printf("%d\n",ans);
+	int p1=x,p2=y;
+	for(int i=20;i>=0;i--)
+		if(deep[p1]-(1<<i)>deep[id])
+			p1=anc[p1][i];
+	for(int i=20;i>=0;i--)
+		if(deep[p2]-(1<<i)>deep[id])
+			p2=anc[p2][i];
+	int res=cal(p1,p2,id);
+	res+=dep[x]+dep[y]-dep[p1]-dep[p2];
+	printf("%d\n",res);
 }
 
 void solve(){
 	static int x,y;
 	scanf("%d %d",&x,&y);
-	if(lca(x,y)>n){
-		ans=dep[x]+dep[y]-2*dep[lca(x,y)];
-		solve1(x,y,lca(x,y));
-	}
+	if(lca(x,y)>n) solve1(x,y,lca(x,y));
 	else printf("%d\n",dep[x]+dep[y]-2*dep[lca(x,y)]);
 }
 

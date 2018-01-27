@@ -58,7 +58,7 @@ int findup(int x,int y){
 }  
 int main(){  
     freopen("bzoj2125.in","r",stdin);
-    freopen("bzoj2125.out","w",stdout);
+    freopen("bzoj21251.out","w",stdout);
     scanf("%d%d%d",&n,&m,&cas); int i,x,y,z,u,v;  
     for (i=1; i<=m; i++){  
         scanf("%d%d%d",&x,&y,&z);  
