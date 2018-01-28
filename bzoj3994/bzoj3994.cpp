@@ -3,44 +3,26 @@
 #include <cstring>
 #include <iostream>
 #include <algorithm>
-#include <cmath>
+// #include <cmath>
 using namespace std;
 
-#define Mod 1004535809
+#define Mod 1004535809LL
 #define MAXM 8010
 #define ii pair<int,int>
 #define INF 0x3f3f3f3f
 typedef long long ll;
 
-ll sum;
-int size,wh;
-int n,m,x,s,cnt[MAXM],book[MAXM],res[MAXM],rt;
-
-struct complex{
-	double real,imag;
-	complex (){}
-	complex (double x,double y){real=x,imag=y;}
-	complex (ll x){real=x,imag=0;}
-	complex operator + (const complex &a)const{
-		return complex(real+a.real,imag+a.imag);
-	}
-	complex operator - (const complex &a)const{
-		return complex(real-a.real,imag-a.imag);
-	}
-	complex operator * (const complex &a)const{
-		return complex(real*a.real-imag*a.imag,real*a.imag+imag*a.real);
-	}
-}a[MAXM*8],b[MAXM*8],cur[MAXM*8],u[MAXM*8];
+ll sum,INV;
+ll size,wh;
+int n,m,x,s,cnt[MAXM],res[MAXM],rt;
+ll a[MAXM*8],b[MAXM*8],cur[MAXM*8],u[MAXM*8];
 
 void getroot(){
 	for(int i=2;i<m;i++){
-		memset(book,0,sizeof(book));
-		int cur=1,cnt=0;
-		while(cnt<m-1){
-			if(book[cur]) break;
-			book[cur]=1,cnt++,cur=(cur*i)%m;
-		}
-		if(cnt==m-1){
+		int cur=i,cnt=0;
+		while(cur!=1)
+			cnt++,cur=(cur*i)%m;
+		if(cnt==m-2){
 			rt=i;break;
 		}
 	}
@@ -50,6 +32,15 @@ void getroot(){
 		MOD=(MOD*rt)%m;
 		b[i]=cnt[res[i]];
 	}
+}
+
+ll pow(ll x,ll k){
+	ll res=1;
+	while(k){
+		if(k&1) res=(res*x)%Mod;
+		x=(x*x)%Mod,k>>=1;
+	}
+	return res;
 }
 
 int lowbit(int x){return x&-x;}
@@ -62,14 +53,21 @@ int bit_reverse(int mask){
 	return ans;
 }
 
-void fft(complex *A,bool type){
+void fft(ll *A,bool type){
 	for(int i=0;i<size;i++){
 		int pos1=bit_reverse(i);
 		if(pos1<i) swap(A[i],A[pos1]);
 	}
-	for(int i=0;i<size;i++){
-		double angle=(type?2.0:-2.0)*M_PI/(double)size*(double)i;
-		u[i]=complex(cos(angle),sin(angle));
+	ll mul=pow(3,(Mod-1)/size);
+	if(type){
+		u[0]=1;
+		for(int i=1;i<size;i++)
+			u[i]=(u[i-1]*mul)%Mod;
+	}
+	else{
+		u[size-1]=mul;
+		for(int i=size-2;i>=0;i--)
+			u[i]=(u[i+1]*mul)%Mod;
 	}
 	for(int step=2;step<=size;step<<=1){
 		int gap=step/2;
@@ -78,20 +76,20 @@ void fft(complex *A,bool type){
 			for(int j=i;j<i+gap;j++){
 				int k1=(j-i)*dist;
 				int k2=(j-i+gap)*dist;
-				complex new1(A[j]+A[j+gap]*u[k1]);
-				complex new2(A[j]+A[j+gap]*u[k2]);
+				ll new1=(A[j]+A[j+gap]*u[k1])%Mod;
+				ll new2=(A[j]+A[j+gap]*u[k2])%Mod;
 				A[j]=new1,A[j+gap]=new2;
 			}
 		}
 	}
 	if(!type)
 		for(int i=0;i<size;i++)
-			A[i].real/=(double)size,A[i].imag/=(double)size;
+			A[i]=(A[i]*INV)%Mod;
 }
 
-void fftmul(complex *A,complex *B){
+void fftmul(ll *A,ll *B){
 	for(int i=0;i<size;i++)
-		cur[i]=complex(0,0);
+		cur[i]=0;
 	for(int i=0;i<=m-3;i++)
 		cur[i]=B[i+1];
 	for(int i=m-2;i<=2*m-4;i++)
@@ -99,12 +97,12 @@ void fftmul(complex *A,complex *B){
 	fft(A,true);
 	fft(cur,true);
 	for(int i=0;i<size;i++)
-		A[i]=A[i]*cur[i];
+		A[i]=(A[i]*cur[i])%Mod;
 	fft(A,false);
 	for(int i=0;i<=m-2;i++)
-		A[i]=complex(llround(A[i+m-2].real)%Mod);
+		A[i]=A[i+m-2]%Mod;
 	for(int i=m-1;i<=size;i++)
-		A[i]=complex(0,0);
+		A[i]=0;
 }
 
 void pow(int k){
@@ -124,10 +122,11 @@ int main(){
     getroot();
     a[0]=size=1;
     while(size<=3*m-4) size<<=1;
+    INV=pow(size,Mod-2);
     pow(n-1);
     for(int i=0;i<m-1;i++)if(res[i]==x)wh=i;
     for(int i=0;i<m-1;i++){
-    	sum+=(ll)cnt[res[i]]*llround(a[wh].real);
+    	sum+=((ll)cnt[res[i]]*a[wh])%Mod;
     	sum%=Mod;
     	wh--;if(wh<0) wh+=m-1;
     }
