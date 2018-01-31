@@ -8,7 +8,6 @@ for i in `seq 1 10000`;do
 	./ac > out2
 	if diff out1 out2;then
 		echo "success"
-		time ./mine
 	else
 		echo "wrong"
 		exit
