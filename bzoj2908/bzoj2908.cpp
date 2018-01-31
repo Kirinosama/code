@@ -15,13 +15,14 @@ using namespace std;
 #define INF 0x3f3f3f3f
 typedef long long ll;
 
-int n,m,k,a[MAXN],son[MAXN],size[MAXN];
+ll a[MAXN];
+int n,m,k,son[MAXN],size[MAXN];
 int dep[MAXN],dfn[MAXN],ti,father[MAXN],top[MAXN],id[MAXN];
 vector <int> to[MAXN];
 
 struct node{
 	node *ch[2];
-	int lval,rval
+	int lval[32][2],rval[32][2];
 	void maintain(){
 		for(int i=0;i<k;i++){
 			lval[i][0]=ch[1]->lval[i][ch[0]->lval[i][0]];
@@ -31,6 +32,12 @@ struct node{
 		}
 	}
 }*root;
+
+struct iii{
+	int fst,sec,thd;
+	iii() {}
+	iii(int x,int y,int z) {fst=x,sec=y,thd=z;}
+};
 
 int nand(int x,int y){
 	return !(x&y);
@@ -45,9 +52,9 @@ void dfs1(int x,int f){
 }
 
 void dfs2(int x,int tp){
-	dfn[x]=++ti;id[ti]=dfn[x];top[x]=tp;
+	dfn[x]=++ti;id[ti]=x;top[x]=tp;
 	if(son[x])dfs2(son[x],tp);
-	for(int i=0;i<to[x].size();i++)if(to[x][i]!=father[x]){
+	for(int i=0;i<to[x].size();i++)if(to[x][i]!=father[x] && to[x][i]!=son[x]){
 		dfs2(to[x][i],to[x][i]);
 	}
 }
@@ -67,60 +74,81 @@ void build(node *&p,int l,int r){
 	}
 }
 
-int Transform(node *p,int res,int l,int r,int L,int R,int c){
+void Transform(node *p,int *A,int l,int r,int L,int R,int c){
+	if(l>R || r<L) return;
 	if(l>=L && r<=R){
-		int k=
 		for(int i=0;i<k;i++){
-			if(res==-1) 
+			if(c==1)A[i]=p->lval[i][A[i]];
+			else A[i]=p->rval[i][A[i]];
 		}
 	}else if(l!=r){
 		int mid=(l+r)>>1;
+		if(c==1) Transform(ls,A,l,mid,L,R,c),Transform(rs,A,mid+1,r,L,R,c);
+		else Transform(rs,A,mid+1,r,L,R,c),Transform(ls,A,l,mid,L,R,c);
 	}
 }
 
 void Query(int x,int y){
-	queue <int> s1;
-	stack <int> s2;
-	int res=0;
+	queue <iii> s1;stack <iii> s2;
 	while(top[x]!=top[y]){
 		if(dep[top[x]]>dep[top[y]]){
-			s1.push(Transform(root,-1,1,n,dfn[top[x]],dfn[x],-1));
+			s1.push(iii(dfn[top[x]],dfn[x],-1));
 			x=father[top[x]];
 		}else{
-			s2.push(Transform(root,-1,1,n,dfn[top[y]],dfn[y],1));
+			s2.push(iii(dfn[top[y]],dfn[y],1));
 			y=father[top[y]];
 		}
 	}
 	if(dep[x]>dep[y]){
-		for(int i=dfn[x];i>=dfn[y];i--) s1.push(a[id[i]]);
+		s1.push(iii(dfn[y],dfn[x],-1));
 	}else{
-		for(int i=dfn[x];i<=dfn[y];i++) s1.push(a[id[i]]);
+		s1.push(iii(dfn[x],dfn[y],1));
 	}
+	int A[32]={0};
 	while(!s1.empty()){
-		res=nand(res,s1.front());s1.pop();
+		iii cur=s1.front();
+		Transform(root,A,1,n,cur.fst,cur.sec,cur.thd),s1.pop();
 	}
 	while(!s2.empty()){
-		res=nand(res,s2.top());s2.pop();
+		iii cur=s2.top();
+		Transform(root,A,1,n,cur.fst,cur.sec,cur.thd),s2.pop();
 	}
-	printf("%d\n",res);
+	ll res=0;
+	for(int i=0;i<k;i++)
+		res+=(ll)A[i]*(1LL<<i);
+	printf("%lld\n",res);
+}
+
+void Replace(node *&p,int l,int r,int L,int R){
+	if(l>R || r<L) return;
+	if(l>=L && r<=R){
+		for(int i=0;i<k;i++){
+			p->lval[i][0]=p->rval[i][0]=nand((a[id[l]]>>i)&1,0);
+			p->lval[i][1]=p->rval[i][1]=nand((a[id[l]]>>i)&1,1);
+		}
+	}else if(l!=r){
+		int mid=(l+r)>>1;
+		Replace(ls,l,mid,L,R);
+		Replace(rs,mid+1,r,L,R);
+		p->maintain();
+	}
 }
 
 void solve(){
-	char str[10];int x,y;
-	scanf("%s %d %d",str,&x,&y);
+	char str[10];int x;ll y;
+	scanf("%s %d %lld",str,&x,&y);
 	switch(str[0]){
 		case 'Q':
-			Query(x,y);
-			break;
+			Query(x,y);break;
 		case 'R':
-			Replace(x,y);
+			a[x]=y;Replace(root,1,n,dfn[x],dfn[x]);
 	}
 }
 
 int main(){
     freopen("bzoj2908.in","r",stdin);
     cin>>n>>m>>k;
-    for(int i=1;i<=n;i++) scanf("%d",&a[i]);
+    for(int i=1;i<=n;i++) scanf("%lld",&a[i]);
    	for(int i=1;i<n;i++){
    		static int x,y;
    		scanf("%d %d",&x,&y);
