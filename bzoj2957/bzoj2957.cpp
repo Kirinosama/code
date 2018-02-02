@@ -7,25 +7,29 @@
 #include <cmath>
 using namespace std;
 
-#define eps 1e-8
+#define eps 1e-10
 #define MAXN 200010
 #define ii pair<int,int>
 #define INF 0x3f3f3f3f
 typedef long long ll;
+
 
 int n,m,sqr;
 int cnt[400];
 
 struct Fraction{
 	int up,down;
+	double val;
 	bool operator > (const Fraction &a)const{
-		return (ll)up*(ll)a.down>(ll)down*(ll)a.up;
+		if(fabs(val-a.val)>eps)return val>a.val;
+		else return (ll)up*(ll)a.down>(ll)down*(ll)a.up;
 	}
 	bool operator < (const Fraction &a)const{
-		return (ll)up*(ll)a.down<(ll)down*(ll)a.up;
+		if(fabs(val-a.val)>eps)return val<a.val;
+		else return (ll)up*(ll)a.down<(ll)down*(ll)a.up;
 	}
-	Fraction(){up=0,down=1;}
-	Fraction(int x,int y){up=x,down=y;}
+	Fraction(){up=0,down=1;val=0.0;}
+	Fraction(int x,int y){up=y,down=x;val=(double)y/(double)x;}
 }d[MAXN],v[400][400];
 
 void change(Fraction *A,int &cnt,int l,int r){
@@ -39,7 +43,7 @@ void change(Fraction *A,int &cnt,int l,int r){
 void solve(){
 	static int x,y;int ans=0;
 	scanf("%d %d",&x,&y);
-	d[x-1]=Fraction(y,x);
+	d[x-1]=Fraction(x,y);
 	change(v[(x-1)/sqr],cnt[(x-1)/sqr],(x-1)/sqr*sqr,((x-1)/sqr+1)*sqr-1);
 	Fraction now;
 	for(int i=0;i<=(n-1)/sqr;i++){
