@@ -131,6 +131,11 @@ bfs时
 线性筛逆元:
 inv[1]=1;rep(2,n) inv[i]=(p-p/i)*inv[p%i])
 
+原根：
+一个数m如果有原根，则其原根个数为phi(phi(m))。特别地，对素数有phi(p)=p-1。
+int k=m是质数?m-1:phi(m)
+若所有p^(k/k的质因数)mod m !=1 则 p为m的原根
+
 中国剩余定理:
 M[i]=所有m的乘积/m[i]
 ans=Σa[i]*M[i]*inv(M[i],m[i])
