@@ -50,7 +50,7 @@ void dfs(int x,int f){
 
 void change_ans(int k,int x,int y){
 	if(x<y) ans+=(ll)v[k]*(ll)w[y];
-	else ans-=(ll)v[k]*(ll)w[y];
+	else ans-=(ll)v[k]*(ll)w[x];
 }
 
 void change_col(int pos,int col1,int col2){
@@ -63,15 +63,16 @@ void change_col(int pos,int col1,int col2){
 }
 
 void reverse(int x,int y){
+	//printf("reverse %d %d\n",x,y);
 	int pos=x;
 	while(1){
-		if(!vis[x]){
-			change_ans(c[x],cnt[c[x]],cnt[c[x]]+1);
-			cnt[c[x]]++;
+		if(!vis[pos]){
+			change_ans(c[pos],cnt[c[pos]],cnt[c[pos]]+1);
+			cnt[c[pos]]++;
 		}else{
-			change_ans(c[x],cnt[c[x]],cnt[c[x]]-1);
-			cnt[c[x]]--;
-		}vis[x]^=1;
+			change_ans(c[pos],cnt[c[pos]],cnt[c[pos]]-1);
+			cnt[c[pos]]--;
+		}vis[pos]^=1;
 		if(pos==y) break;
 		pos=anc[pos][0];
 	}
@@ -93,12 +94,12 @@ int main(){
     for(int i=1;i<=m;i++)v[i]=read();
     for(int i=1;i<=n;i++)w[i]=read();
     for(int i=1;i<n;i++){
-    	static int x=read(),y=read();
+    	int x=read(),y=read();
     	to[x].push_back(y),to[y].push_back(x);
     }
     for(int i=1;i<=n;i++)c[i]=read(),c1[i]=c[i];
     while(q--){
-    	static int type=read(),x=read(),y=read();
+    	int type=read(),x=read(),y=read();
     	if(!type){
     		C[++change_cnt]=(Change){x,c1[x],y};c1[x]=y;
     	}else{
