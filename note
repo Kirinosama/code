@@ -93,6 +93,23 @@ a a'表示选和不选
 树的直径：从任意一点u处bfs找最远点x 从x处bfs找最远点y xy即为树的直径
 树的重心:树形dp
 
+建虚树:
+关键点按dfn序排序
+for(int i=1;i<=n;i++){  
+    int lca=getlca(stk[top],lux[i].x);  
+    while(deep[lca]<deep[stk[top]]){  
+        if(deep[stk[top-1]]<=deep[lca]){  
+        	int last=stk[top--];  
+            if(stk[top]!=lca)stk[++top]=lca;  
+            G.add(lca,last);  
+            break;  
+        }  
+        G.add(stk[top-1],stk[top]),top--;  
+    }  
+    if(stk[top]!=lux[i].x)stk[++top]=lux[i].x;  
+}  
+while(top)G.add(stk[top-1],stk[top]),top--;  
+
 lucas定理:
 Lucas(n,m,p)=c(n%p,m%p)*Lucas(n/p,m/p,p) 
 
