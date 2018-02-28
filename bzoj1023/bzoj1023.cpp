@@ -14,6 +14,10 @@ using namespace std;
 #define INF 0x3f3f3f3f
 typedef long long ll;
 
+/*
+仙人掌的直径
+*/
+
 int n,m,ne[MAXM],last[MAXN],edge_cnt,cnt,a[MAXN];
 int dfn[MAXN],low[MAXN],ti,fst,sec,ans;
 int bcc_cnt,bccno[MAXN],val[MAXN],dp[MAXN];
