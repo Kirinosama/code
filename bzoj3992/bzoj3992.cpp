@@ -3,7 +3,6 @@
 #include <cstring>
 #include <iostream>
 #include <algorithm>
-// #include <cmath>
 using namespace std;
 
 #define Mod 1004535809LL
@@ -63,8 +62,7 @@ void fft(ll *A,bool type){
 		u[0]=1;
 		for(int i=1;i<size;i++)
 			u[i]=(u[i-1]*mul)%Mod;
-	}
-	else{
+	}else{
 		u[size-1]=mul;
 		for(int i=size-2;i>=0;i--)
 			u[i]=(u[i+1]*mul)%Mod;
