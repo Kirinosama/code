@@ -79,7 +79,6 @@ void solve(){
 		Q[++tail]=l[i];
 	}
 	while(head<tail && judge(Q[head],Q[tail],Q[tail-1])) tail--;
-	while(head<tail && judge(Q[tail],Q[head],Q[head+1])) head++;
 	Q[++tail]=Q[head];
 	for(int i=head;i<tail;i++)
 		ans[++anscnt]=getintersect(Q[i],Q[i+1]);
