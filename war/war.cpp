@@ -13,7 +13,8 @@ typedef long long ll;
 
 struct node{
 	node *ch[2];
-	int cnt,sum,val,key;
+	int cnt,sum,key;
+	ll val;
 	node(){ch[0]=ch[1]=NULL;cnt=sum=val=0;key=rand();}
 	node(int x){ch[0]=ch[1]=NULL;cnt=sum=1;val=x;key=rand();}
 	void maintain(){
@@ -23,7 +24,8 @@ struct node{
 	}
 }*root;
 
-int n;
+int n,m;
+ll a[30010];
 
 node * rot(node *p,int c){
 	node *q=p->ch[c];
@@ -33,7 +35,7 @@ node * rot(node *p,int c){
 	return q;
 }
 
-void insert(node *&p,int x){
+void insert(node *&p,ll x){
 	if(!p){
 		p=new node(x);
 		return;
@@ -49,7 +51,7 @@ void insert(node *&p,int x){
 	}
 }
 
-node* del(node *p,int x){
+node* del(node *p,ll x){
 	if(p->val==x){
 		if(p->cnt)p->cnt--,p->sum--;
 		if(!p->cnt){
@@ -78,61 +80,38 @@ node* del(node *p,int x){
 	return p;
 }
 
-int getrank(int x){
-	int tot=0;
+ll whrank(int x){
 	node *p=root;
 	while(p){
-		if(p->val>=x) p=ls;
-		else tot+=(ls?ls->sum:0)+p->cnt,p=rs;
+		int rcnt=rs?rs->sum:0;
+		if(x<=rcnt) p=rs;
+		else if(x>rcnt && x<=rcnt+p->cnt) return p->val;
+		else x-=rcnt+p->cnt,p=ls;
 	}
-	return tot;
+	return -1;
 }
-
-int whrank(int x){
-	node *p=root;
-	while(1){
-		int lcnt=ls?ls->sum:0;
-		if(x<=lcnt) p=ls;
-		else if(x>lcnt && x<=lcnt+p->cnt) return p->val;
-		else x-=lcnt+p->cnt,p=rs;
-	}
-}
-
-int getpre(int x){
-	int res=-INF;
-	node *p=root;
-	while(p){
-		if(p->val>=x) p=ls;
-		else res=max(res,p->val),p=rs;
-	}
-	return res;
-}
-
-int getsuc(int x){
-	int res=INF;
-	node *p=root;
-	while(p){
-		if(p->val<=x) p=rs;
-		else res=min(res,p->val),p=ls;
-	}
-	return res;
-}
-
 
 int main(){
-    freopen("p3369.in","r",stdin);
+    freopen("war.in","r",stdin);
+    freopen("war.out","w",stdout);
     cin>>n;
-    for(int i=1;i<=n;i++){
-    	int opt,x;
-    	scanf("%d%d",&opt,&x);
-    	switch(opt){
-    		case 1:insert(root,x);break;
-    		case 2:root=del(root,x);break;
-    		case 3:cout<<getrank(x)+1<<endl;break;
-    		case 4:cout<<whrank(x)<<endl;break;
-    		case 5:cout<<getpre(x)<<endl;break;
-    		case 6:cout<<getsuc(x)<<endl;
-    	}
-    }
+	for(int i=1;i<=n;i++)scanf("%lld",&a[i]),insert(root,a[i]);
+	cin>>m;
+	for(int i=1;i<=m;i++){
+		char opt;ll x,y;
+		scanf("\n%c %lld ",&opt,&x);
+		if(opt!='Q')scanf("%lld",&y);
+		switch(opt){
+			case 'A':
+				root=del(root,a[x]);
+				a[x]-=y;if(a[x]>0)insert(root,a[x]);break;
+			case 'C':
+				root=del(root,a[x]);
+				a[x]+=y;insert(root,a[x]);break;
+			case 'Q':
+				cout<<whrank(x)<<endl;
+		}
+	}
+	printf("%d",root?root->sum:0);
     return 0;
 }
