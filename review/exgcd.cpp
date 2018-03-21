@@ -20,7 +20,7 @@ void exgcd(int a,int b,int &d,int &x,int &y){
 int inv(int p,int q){
 	int d,x,y;
 	exgcd(p,q,d,x,y);
-	return d==1 ? (x+q)%q : -1;
+	return d==1 ?  (x+q)%q : -1;
 }
 
 int main(){
