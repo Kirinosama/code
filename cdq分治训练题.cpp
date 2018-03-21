@@ -1,4 +1,4 @@
-#include <cstdlib>
+ #include <cstdlib>
 #include <cstdio>
 #include <cstring>
 #include <iostream>
@@ -84,4 +84,5 @@ int main()
 	见bzoj2683
 	cdq分治<<<<时间>>>> (mid时间以前对mid时间以后造成的影响)
 	想办法保证顺序 使复杂度在线性时间内
+	此处排序为了保证影响依次增大 免去树状数组
 */

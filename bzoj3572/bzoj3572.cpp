@@ -5,6 +5,8 @@
 #include <algorithm>
 using namespace std;
 
+//虚树
+
 #define MAXN 1200010
 #define ii pair<int,int>
 #define INF 0x3f3f3f3f
