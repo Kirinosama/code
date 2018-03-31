@@ -83,4 +83,3 @@ vnoremap <F6> <Esc>:w<CR>:!g++ -std=c++11 -g % -o /tmp/a.out && lldb /tmp/a.out<
 inoremap <D-[> <Esc> 
 nnoremap <D-[> i
 
-inoremap jj <Esc>
