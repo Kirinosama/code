@@ -10,7 +10,7 @@ set shortmess=atI
 syntax on
 
 set lines=35 columns=118
-set guifont=Source_Code_Pro:h16
+set guifont=Source_Code_Pro_Light:h16
 
 set laststatus=2
 set noshowmode
