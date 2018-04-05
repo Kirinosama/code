@@ -146,7 +146,7 @@ for(int i=1;i<=n;i++){
 while(top)G.add(stk[top-1],stk[top]),top--;  
 
 lucas定理:
-Lucas(n,m,p)=c(n%p,m%p)*Lucas(n/p,m/p,p) 
+c(n,m)%p=c(n%p,m%p)*c(n/p,m/p)%p 
 
 splay区间平移:
 ab平移c个单位=
@@ -431,7 +431,7 @@ D = a0*b1 – a1*b0， (D为0时，表示两直线平行)
 线性基：
 从1到log行 第i行代表的数是1<<(log-i)
 若insert的数包含这行对应的数：
-1º 若已被占领 ^
+1º 若已被占fatal: HttpRequestException encountered.领 ^
 2º 占领此行 用后面消干净这行 用这行消干净前面
 
 第二类斯大林数

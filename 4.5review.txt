@@ -4,7 +4,7 @@
 
 //treap splay kd_tree lct
 
-kmp ac 后缀数组 manacher
+//kmp ac 后缀数组 manacher
 
 欧拉函数 莫比乌斯 
 中国剩余定理
@@ -12,7 +12,9 @@ exgcd 线性筛逆元
 bzoj3667
 线性基 生成树矩阵
 lucas
+原根
 fft/ntt
+康拓展开
 
 tarjan 割点割边 点双
 虚树 仙人掌
@@ -24,3 +26,4 @@ floyd闭包
 最小路径覆盖
 最大独立集
 cdq 整体二分
+mex sg
