@@ -1,7 +1,7 @@
 set nocompatible
 filetype off  
 
-colorscheme solarized
+colorscheme Tomorrow-Night-Eighties 
 
 set nu
 set backspace=2
