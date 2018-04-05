@@ -1,8 +1,8 @@
 //dp斜率优化
 
-凸包 半平面交 计算几何常规操作
+//凸包 半平面交 计算几何常规操作
 
-treap splay kd_tree lct
+//treap splay kd_tree lct
 
 kmp ac 后缀数组 manacher
 
