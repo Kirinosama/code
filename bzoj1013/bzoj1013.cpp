@@ -10,7 +10,7 @@ using namespace std;
 
 #define MAXN 30
 const double eps=1e-8;	
-
+// #85a7a5
 int n;
 double a[MAXN][MAXN],s[MAXN][MAXN],ans[MAXN];
 
