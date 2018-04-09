@@ -82,3 +82,4 @@ int main(){
 	printf("%.3f",ans);
     return 0;
 }
+
