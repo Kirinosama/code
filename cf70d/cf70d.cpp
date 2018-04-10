@@ -19,7 +19,7 @@ struct node{
 	node(){}
 	node(double a,double b){x=a,y=b,ang=atan2(b-rx,a-ry);}
 	bool operator < (const node &a)const{
-		if(fabs(ang-a.ang)<eps) return (x-rx)*(x-rx)+(y-ry)*(y-ry)>(a.x-rx)*(a.x-rx)+(a.y-ry)*(a.y-ry);
+		if(fabs(ang-a.ang)<eps) return (x-rx)*(x-rx)+(y-ry)*(y-ry)<(a.x-rx)*(a.x-rx)+(a.y-ry)*(a.y-ry);
 		return ang<a.ang;
 	}
 	node operator - (const node &a)const{
