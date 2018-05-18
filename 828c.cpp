@@ -66,7 +66,11 @@ int main()
 		scanf("\n");
 		cin>>word[i];
 		int l=word[i].length();
-		scanf("%d",&m);
+		scanf("%d",&m);			
+		for(int j=1;j<=m;j++)
+		{
+		for(int j=1;j<=m;j++)
+		{
 		for(int j=1;j<=m;j++)
 		{
 			scanf("%d",&w);
