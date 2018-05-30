@@ -249,6 +249,15 @@ if(ru>chu) 连(s,i,(ru-chu)/2)
 else 连(i,t,(chu-ru)/2)
 求最大流==s出去的流量？ 
 
+求二分图最大权匹配km算法:
+先把每个x附上lx(连出去所有边最大的权值)
+对于每一个x尝试hungary找最优找不到时调整lxly
+取d=所有未便利的y的slack最小值
+将所有lx-d ly+d
+hungary过程如下:
+对于一个x能到的所有y 若lx[x]+ly[y]=w[x][y] 则正常2分图匹配
+否则 slack[y]=min(slack[y],lx[x]+ly[y]-w[x][y])
+
 最小点覆盖：对于图G=(V,E)中的一个点覆盖是一个集合S⊆V使得每一条边至少有一个端点在S中。
 二分图：最大匹配
 
