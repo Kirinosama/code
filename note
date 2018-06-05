@@ -334,8 +334,12 @@ H[i] : 等于Height[Rank[i]]，也就是后缀Suffix[i]和它前一名的后缀�
 树上莫队:
 x y -> x' y'
 即x->x' y->y'
-把x到lca(x,x')取反
-把y到lca(y,y')取反
+把x到lca(x,x')(不包括这个点)取反
+把x'到lca(x,x')(不包括这个点)取反
+把y到lca(y,y')(不包括这个点)取反
+把y'到lca(y,y')(不包括这个点)取反
+把lca(x,y)取反
+把lca(x',y')取反
 
 lct：
 fa[x]=y表示在原树中x与y有边连接且fa[x]=y
@@ -463,4 +467,7 @@ S(n,i)=S(n−1,i)∗i+S(n−1,i−1)
 博弈论 sg函数    
 mex(x)=min未出现在{mex(y)(y为x可达状态)}的自然数
 阶梯nim游戏 奇数层亦或和 偶数层不考虑
->>>>>>> 137603c4ce5d48673761afcbf539f51c303aa481
+
+二进制枚举子集
+对于x的所有子集
+for(int i=x;i;i=(i-1)&x)

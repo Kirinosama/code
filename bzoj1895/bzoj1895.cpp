@@ -185,7 +185,8 @@ void init(){
 }
 
 int main(){
-    freopen("bzoj1895.in","r",stdin);
+    freopen("input","r",stdin);
+    //freopen("out1","w",stdout);
     cin>>n;
     for(int i=1;i<=n;i++)
     	scanf("%d",&a[i+1]);
