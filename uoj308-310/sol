@@ -1,0 +1,7 @@
+T2
+对每行每列开set
+离散化后对每行每列建segment tree
+40pts
+
+T3
+
