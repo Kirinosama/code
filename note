@@ -525,3 +525,11 @@ or	f[j+gap]=(t0+t1)%MOD
 xor f[j]=(t0+t1)*rev%MOD,f[j+gap]=(t0-t1)*rev%MOD
 and	f[j]=(t0-t1)%MOD;
 or	f[j+gap]=(t1-t0)%MOD
+
+bitset
+当作全是01的长数组 可以左移右移 位运算
+
+平衡树
+维护权值与维护序列一样
+在插入时就决定了
+在树上根据形状决定其地位 而非val
