@@ -7,3 +7,34 @@ dp题	想如何优化转移/换dp方式/减少状态/想..最优
 
 题答	
 交互
+
+*need to notice:
+1. high accuracy first
+2. time first
+3. simple first
+4. don't use too much time on each problem
+5. if have ideas, solve it.
+6. write down a queue.(order for gets pts)
+6. long codes (low accuracy) for special pts 
+	push into queues and solve later
+
+how to solve problems:
+0. read 3 problems carefully and choose one
+1. get ideas(not very long)
+2. look for simple pts(dont take much time)
+3. get more ideas{
+	4. look for special pts(dont take much time either)(low difficult for writing)
+	4. solve 100 pts (usually not very difficult to write)
+}
+5. switch another problem
+6. check the accuracy
+
+reason for can't solving the problems:
+
+1. knowledge haven't learn
+2. don't know how to think(for construct problem)
+3. math problems
+
+need to change:
+1. how to get pts in graph problems?
+2. how to get idea in the problem?
