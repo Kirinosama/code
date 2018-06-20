@@ -36,7 +36,7 @@ void premake(){
 }
 
 int main(){
-	freopen("function2.in","r",stdin);
+	freopen("function.in","r",stdin);
 	freopen("function2.out","w",stdout);
 	cin>>n;
 	for(int i=1;i<=n;i++)scanf("%lld",&a[i]);
