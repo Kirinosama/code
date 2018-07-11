@@ -346,6 +346,10 @@ fa[x]=y表示在原树中x与y有边连接且fa[x]=y
 son[x][0]=y表示x，y在一个splay中且在原树中x深度比y大
 在一个splay中则原图必然连接 但原图连接不一定在一个splay中
 维护标记时注意size的影响 rev标记不当时执行 pushdown时执行
+access操作代表提出x到根的这条链作为lca
+判断两点是否联通 用find找所在树根
+判断两点是否直接相连 要保证深度关系的同时 中间没有点
+rot时 若f不是splay的根 才能让g的儿子变成x
 
 回文树：
 节点信息 len to[26] sufflink（指向最长后缀回文串）
