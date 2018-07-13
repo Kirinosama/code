@@ -74,7 +74,7 @@ Tips
 
 判素数 rubbin miller
 对于p 将x=p-1 分解为2^n*k
-对于一个尝试k
+对于一个尝试a
 从a^k开始平方直到等于a^(2^n*k)
 若a^(2^x*k)=1(mod p) 则判断 a^(2^(x-1)*k)是否等于1或p-1
 
@@ -89,6 +89,10 @@ pollard_rho(ll n, int a){
     if(d == n) return pollard_rho(n, a + 1);
     return d;
 }
+
+由于数字过大需要快速加 即x*y运算分解成2进制
+注意随机数
+检验质数时的数不能是自己
 
 莫比乌斯反演
 约数的莫比乌斯反演： 
