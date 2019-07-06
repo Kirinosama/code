@@ -10,6 +10,7 @@ struct edge{
 
 int edge_cnt,last[MAXN],ne[MAXM];
 int n,m,p,s,t,ans1,ans2,dis[MAXN],pre[MAXN];
+int a[MAXN];
 bool instack[MAXN];
 
 void add_edge(int x,int y,int f,int w){
@@ -45,13 +46,13 @@ int spfa(){
 }
 
 int main(){
-	//freopen("input","r",stdin);
+//	freopen("neural9.in","r",stdin);
 	cin>>n>>p>>m;
 	s=n+p+1;t=s+1;edge_cnt=1;
 	for(int i=1;i<=n;i++){
 		static int x;
-		scanf("%d",&x);
-		add_edge(s,i,x,0);
+		scanf("%d",&a[i]);
+		add_edge(s,i,1,0);
 		add_edge(i,s,0,0);
 	}
 	for(int i=n+1;i<=n+p;i++){
@@ -61,8 +62,8 @@ int main(){
 	for(int i=1;i<=m;i++){
 		static int x,y,w;
 		scanf("%d %d %d",&x,&y,&w);
-		add_edge(x,y+n,1,-w);
-		add_edge(y+n,x,0,w);
+		add_edge(x,y+n,1,-a[x]*w);
+		add_edge(y+n,x,0,a[x]*w);
 	}
 	while(spfa());
 	cout<<-ans2;
